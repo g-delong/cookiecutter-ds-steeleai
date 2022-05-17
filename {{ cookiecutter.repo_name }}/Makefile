@@ -1,4 +1,4 @@
-.PHONY: clean data format requirements test_env venv
+.PHONY: clean data format requirements test test_env venv
 
 #################################################################################
 # GLOBALS                                                                       #
@@ -7,12 +7,6 @@
 PROJECT_DIR := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 PROJECT_NAME = {{ cookiecutter.repo_name }}
 PYTHON_INTERPRETER = {{ cookiecutter.python_interpreter }}
-
-ifeq (,$(shell which conda))
-HAS_CONDA=False
-else
-HAS_CONDA=True
-endif
 
 #################################################################################
 # COMMANDS                                                                      #
@@ -52,6 +46,10 @@ else
 	@echo "Virtual environment created!"
 	@echo "Run 'source .venv/bin/activate' to activate."
 endif
+
+## Unit tests
+test:
+	pytest tests
 
 ## Test python environment is setup correctly
 test_env:
